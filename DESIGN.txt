@@ -1,0 +1,7 @@
+Deliverables
+
+Those could be in either the WorldModel or in the Background class.
+    private void parseBackgroundRow(WorldModel world, String line, int row, ImageStore imageStore)
+    private Background getBackgroundCell(WorldModel world, Point pos) {
+
+This is because the these functions take a lot of their data from the World Model class, but they are also related in the sense of their usage of background.
