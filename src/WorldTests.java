@@ -135,7 +135,7 @@ public class WorldTests {
     }
 
     @Test
-    public void testStumpIntoSaplingIntoTree() {
+    public void  testStumpIntoSaplingIntoTree() {
         String sav = makeSave(2, 2, "fairy  1 0 100.0 0.100", "stump mystump 0 0");
         List<String> entities = VirtualWorld.headlessMain(new String[]{sav}, 8);
 

@@ -74,20 +74,21 @@ public final class VirtualWorld extends PApplet {
         if (entityOptional.isPresent()) {
             Entity entity = entityOptional.get();
             System.out.println(entity.getId() + ": " + entity.getId() + " : " + entity.getHealth());
+            //comment this out
         }
 
     }
 
     public void scheduleActions(WorldModel world, EventScheduler scheduler, ImageStore imageStore) {
         for (Entity entity : world.getEntities()) {
-            entity.scheduleActions( scheduler, world, imageStore);
+            if (entity instanceof Schedules){
+                Schedules s = (Schedules) entity;
+                s.scheduleActions( scheduler, world, imageStore);
         }
-    }
-
+    }}
     private Point mouseToPoint() {
         return view.getViewport().viewportToWorld(mouseX / TILE_WIDTH, mouseY / TILE_HEIGHT);
     }
-
     public void keyPressed() {
         if (key == CODED) {
             int dx = 0;

@@ -147,46 +147,46 @@ public final class Functions {
     //keep parse stuff
 
     public static Action createAnimationAction(Entity entity, int repeatCount) {
-        return new Action(ActionKind.ANIMATION, entity, null, null, repeatCount);
+        return new Animation( entity,  repeatCount);
     }
 
-    public static Action createActivityAction(Entity entity, WorldModel world, ImageStore imageStore) {
-        return new Action(ActionKind.ACTIVITY, entity, world, imageStore, 0);
+    public static Action createActivityAction(ActivityEntity entity, WorldModel world, ImageStore imageStore) {
+        return new Activity(entity, world, imageStore);
     }
 
-    public static Entity createHouse(String id, Point position, List<PImage> images) {
-        return new Entity(EntityKind.HOUSE, id, position, images, 0, 0, 0, 0, 0, 0);
+    public static House createHouse(String id, Point position, List<PImage> images) {
+        return new House( id, position, images, 0, 0, 0, 0, 0, 0);
     }
 
-    public static Entity createObstacle(String id, Point position, double animationPeriod, List<PImage> images) {
-        return new Entity(EntityKind.OBSTACLE, id, position, images, 0, 0, 0, animationPeriod, 0, 0);
+    public static Obstacle createObstacle(String id, Point position, double animationPeriod, List<PImage> images) {
+        return new Obstacle( id, position, images, 0, 0, 0, animationPeriod, 0, 0);
     }
 
-    public static Entity createTree(String id, Point position, double actionPeriod, double animationPeriod, int health, List<PImage> images) {
-        return new Entity(EntityKind.TREE, id, position, images, 0, 0, actionPeriod, animationPeriod, health, 0);
+    public static Tree createTree(String id, Point position, double actionPeriod, double animationPeriod, int health, List<PImage> images) {
+        return new Tree( id, position, images, 0, 0, actionPeriod, animationPeriod, health, 0);
     }
 
-    public static Entity createStump(String id, Point position, List<PImage> images) {
-        return new Entity(EntityKind.STUMP, id, position, images, 0, 0, 0, 0, 0, 0);
+    public static Stump createStump(String id, Point position, List<PImage> images) {
+        return new Stump(id, position, images, 0, 0, 0, 0, 0, 0);
     }
 
     // health starts at 0 and builds up until ready to convert to Tree
-    public static Entity createSapling(String id, Point position, List<PImage> images, int health) {
-        return new Entity(EntityKind.SAPLING, id, position, images, 0, 0, SAPLING_ACTION_ANIMATION_PERIOD, SAPLING_ACTION_ANIMATION_PERIOD, 0, SAPLING_HEALTH_LIMIT);
+    public static Sapling createSapling(String id, Point position, List<PImage> images, int health) {
+        return new Sapling(id, position, images, 0, 0, SAPLING_ACTION_ANIMATION_PERIOD, SAPLING_ACTION_ANIMATION_PERIOD, 0, SAPLING_HEALTH_LIMIT);
     }
 
-    public static Entity createFairy(String id, Point position, double actionPeriod, double animationPeriod, List<PImage> images) {
-        return new Entity(EntityKind.FAIRY, id, position, images, 0, 0, actionPeriod, animationPeriod, 0, 0);
+    public static Fairy createFairy(String id, Point position, double actionPeriod, double animationPeriod, List<PImage> images) {
+        return new Fairy(id, position, images, 0, 0, actionPeriod, animationPeriod, 0, 0);
     }
 
     // need resource count, though it always starts at 0
-    public static Entity createDudeNotFull(String id, Point position, double actionPeriod, double animationPeriod, int resourceLimit, List<PImage> images) {
-        return new Entity(EntityKind.DUDE_NOT_FULL, id, position, images, resourceLimit, 0, actionPeriod, animationPeriod, 0, 0);
+    public static DudeNotFull createDudeNotFull(String id, Point position, double actionPeriod, double animationPeriod, int resourceLimit, List<PImage> images) {
+        return new DudeNotFull( id, position, images, resourceLimit, 0, actionPeriod, animationPeriod, 0, 0);
     }
 
     // don't technically need resource count ... full
-    public static Entity createDudeFull(String id, Point position, double actionPeriod, double animationPeriod, int resourceLimit, List<PImage> images) {
-        return new Entity(EntityKind.DUDE_FULL, id, position, images, resourceLimit, 0, actionPeriod, animationPeriod, 0, 0);
+    public static DudeFull createDudeFull(String id, Point position, double actionPeriod, double animationPeriod, int resourceLimit, List<PImage> images) {
+        return new DudeFull( id, position, images, resourceLimit, 0, actionPeriod, animationPeriod, 0, 0);
     }
 
     public static void parseEntity(WorldModel world, String line, ImageStore imageStore) {
@@ -285,11 +285,11 @@ public final class Functions {
         }
     }
 
-    public static Optional<Entity> findNearest(WorldModel world, Point pos, List<EntityKind> kinds) {
+    public static Optional<Entity> findNearest(WorldModel world, Point pos, List<Class> kinds) {
         List<Entity> ofType = new LinkedList<>();
-        for (EntityKind kind : kinds) {
+        for (Class kind : kinds) {
             for (Entity entity : world.getEntities()) {
-                if (entity.getKind() == kind) {
+                if (entity.getClass() == kind) {
                     ofType.add(entity);
                 }
             }
