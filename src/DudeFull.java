@@ -53,24 +53,10 @@ public final class DudeFull extends Entity implements ActivityEntity, Schedules 
                 canPassThrough,
                 withinReach,
                 PathingStrategy.CARDINAL_NEIGHBORS );
-        System.out.println("DudeFull Position: " + path);
         if (path.size() != 0 ) {
             return path.get(0);
         }
         return this.getPosition();
-//        int horiz = Integer.signum(destPos.x - this.getPosition().x);
-//        Point newPos = new Point(this.getPosition().x + horiz, this.getPosition().y);
-//    //idk here with the getkind()
-//        if (horiz == 0 || world.isOccupied( newPos) && world.getOccupancyCell( newPos).getClass() != Stump.class) {
-//            int vert = Integer.signum(destPos.y - this.getPosition().y);
-//            newPos = new Point(this.getPosition().x, this.getPosition().y + vert);
-//
-//            if (vert == 0 || world.isOccupied( newPos) && world.getOccupancyCell( newPos).getClass() != Stump.class) {
-//                newPos = this.getPosition();
-//            }
-//        }
-//
-//        return newPos;
     }
 
     public void executeActivity( WorldModel world, ImageStore imageStore, EventScheduler scheduler) {
