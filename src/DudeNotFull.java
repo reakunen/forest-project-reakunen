@@ -43,7 +43,8 @@ public final class DudeNotFull extends Entity implements ActivityEntity, Schedul
         if (Functions.adjacent(this.getPosition(), target.getPosition())) {
             this.increaseResourceCount(1);
             target.increaseHealth(-1);
-
+            //target.health--;
+            //target.resourceCount += 1;
             return true;
         } else {
             Point nextPos = this.nextPositionDude( world, target.getPosition());
@@ -64,23 +65,10 @@ public final class DudeNotFull extends Entity implements ActivityEntity, Schedul
                 canPassThrough,
                 withinReach,
                 PathingStrategy.CARDINAL_NEIGHBORS );
-        System.out.println("DudeNotFull Position: " + path);
         if (path.size() != 0) {
             return path.get(0);
         }
         return this.getPosition();
-//        int horiz = Integer.signum(destPos.x - this.getPosition().x);
-//        Point newPos = new Point(this.getPosition().x + horiz, this.getPosition().y);
-//        if (horiz == 0 || world.isOccupied( newPos) && world.getOccupancyCell( newPos).getClass() != Stump.class) {
-//            int vert = Integer.signum(destPos.y - this.getPosition().y);
-//            newPos = new Point(this.getPosition().x, this.getPosition().y + vert);
-//
-//            if (vert == 0 || world.isOccupied( newPos) && world.getOccupancyCell( newPos).getClass() != Stump.class) {
-//                newPos = this.getPosition();
-//            }
-//        }
-//
-//        return newPos;
     }
 
     //help
