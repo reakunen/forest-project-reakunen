@@ -1,6 +1,7 @@
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 
 public class Node implements Comparable<Node> {
     private int g; // g-val distance from starting node
@@ -9,6 +10,30 @@ public class Node implements Comparable<Node> {
     private Node prev; // previous
     private Point p;
 
+    public int hashCode()
+    {
+        int result = 17;
+        result = result * 31 + g;
+        result = result * 31 + h;
+        result = result * 31 + f;
+        result = result * 31 + p.hashCode();
+        return result;
+    }
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        Node node = (Node) o;
+        return g == node.g &&
+                h == node.h &&
+                f == node.f &&
+                Objects.equals(prev, node.prev) &&
+                Objects.equals(p, node.p);
+    }
     static public ArrayList<Point> getPrevious(Node n) {
         ArrayList<Point> points = new ArrayList<>();
         Node temp = n;
@@ -34,9 +59,7 @@ public class Node implements Comparable<Node> {
         prev = d;
         p = e;
     }
-    public boolean contains(Point t) {
-        return this.p.equals(t);
-    }
+
     public String toString()
     {
         return "(" + p.x + "," + p.y + ")";
@@ -49,6 +72,8 @@ public class Node implements Comparable<Node> {
 
     @Override
     public int compareTo(Node o) {
+        if (this.f == o.f)
+            return 0;
         return this.f > o.f ? -1 : 1;
     }
 }
