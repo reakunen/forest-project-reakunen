@@ -26,6 +26,7 @@ public final class Fairy extends Entity implements Schedules, ActivityEntity {
             return true;
         } else {
             Point nextPos = this.nextPositionFairy( world, target.getPosition());
+
             if (!this.getPosition().equals(nextPos)) {
                 world.moveEntity( scheduler, this, nextPos);
             }
@@ -35,14 +36,12 @@ public final class Fairy extends Entity implements Schedules, ActivityEntity {
 
     private Point nextPositionFairy( WorldModel world, Point destPos) {
         PathingStrategy strat = new AStarPathingStrategy();
-//        PathingStrategy strat = new SingleStepPathingStrategy();
         Predicate<Point> canPassThrough = p -> world.withinBounds(p) && !world.isOccupied(p);
         BiPredicate<Point, Point> withinReach = (p1, p2) -> (p1.adjacentTo(p2));
         List<Point> path = strat.computePath( this.getPosition(), destPos,
                 canPassThrough,
                 withinReach,
                 PathingStrategy.CARDINAL_NEIGHBORS );
-        System.out.println("Fairy path: " + path);
         if (path.size() != 0 ) {
             return path.get(0);
         }
