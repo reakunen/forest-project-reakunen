@@ -33,11 +33,11 @@ public final class Point {
         return (dx == 1 && dy == 0) || (dx == 0 && dy == 1) || (dx == 1 && dy == 1);
     }
 
-    public double getDistance(Point a) {
-        return Math.sqrt(Math.pow((this.x - a.x), 2) + (Math.pow((this.y - a.y), 2)));
-    }
-
-//    public int getDistance(Point a) {
-//        return Math.abs(a.x-this.x) + Math.abs(a.y-this.y);
+//    public double getDistance(Point a) {
+//        return Math.sqrt(Math.pow((this.x - a.x), 2) + (Math.pow((this.y - a.y), 2)));
 //    }
+
+    public int getDistance(Point a) {
+        return Math.abs(a.x-this.x) + Math.abs(a.y-this.y);
+    }
 }
