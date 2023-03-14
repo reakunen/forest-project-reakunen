@@ -13,29 +13,19 @@ public class Node implements Comparable<Node> {
     public int hashCode()
     {
         int result = 17;
-        result = result * 31 + g;
-        result = result * 31 + h;
-        result = result * 31 + f;
         result = result * 31 + p.hashCode();
         return result;
     }
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
-        Node node = (Node) o;
-        return g == node.g &&
-                h == node.h &&
-                f == node.f &&
-                Objects.equals(prev, node.prev) &&
-                Objects.equals(p, node.p);
+    public Node getPrev() {
+        return this.prev;
+    }
+    public boolean equals(Node n) {
+        return Objects.equals(this.getPoint(), n.getPoint());
     }
     static public ArrayList<Point> getPrevious(Node n) {
         ArrayList<Point> points = new ArrayList<>();
+        if (n == null)
+            return points;
         Node temp = n;
         while (temp != null) {
             if (temp.prev == null)
