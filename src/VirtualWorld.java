@@ -85,7 +85,8 @@ public final class VirtualWorld extends PApplet {
                 Schedules s = (Schedules) entity;
                 s.scheduleActions( scheduler, world, imageStore);
         }
-    }}
+    }
+    }
     private Point mouseToPoint() {
         return view.getViewport().viewportToWorld(mouseX / TILE_WIDTH, mouseY / TILE_HEIGHT);
     }

@@ -24,4 +24,20 @@ public final class Point {
         result = result * 31 + y;
         return result;
     }
+    /**
+     * Returns true if this point is adjacent to the given point, which means they share an edge or a corner.
+     */
+    public boolean adjacentTo(Point b) {
+        int dx = Math.abs(this.x - b.x);
+        int dy = Math.abs(this.y - b.y);
+        return (dx == 1 && dy == 0) || (dx == 0 && dy == 1) || (dx == 1 && dy == 1);
+    }
+
+    public double getDistance(Point a) {
+        return Math.sqrt(Math.pow((this.x - a.x), 2) + (Math.pow((this.y - a.y), 2)));
+    }
+
+//    public int getDistance(Point a) {
+//        return Math.abs(a.x-this.x) + Math.abs(a.y-this.y);
+//    }
 }

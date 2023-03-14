@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
+import java.util.function.BiPredicate;
+import java.util.function.Predicate;
 
 /**
  * An entity that exists in the world. See EntityKind for the
@@ -41,8 +43,7 @@ public final class DudeNotFull extends Entity implements ActivityEntity, Schedul
         if (Functions.adjacent(this.getPosition(), target.getPosition())) {
             this.increaseResourceCount(1);
             target.increaseHealth(-1);
-            //target.health--;
-            //target.resourceCount += 1;
+
             return true;
         } else {
             Point nextPos = this.nextPositionDude( world, target.getPosition());
@@ -54,18 +55,32 @@ public final class DudeNotFull extends Entity implements ActivityEntity, Schedul
         }
     }
     private Point nextPositionDude( WorldModel world, Point destPos) {
-        int horiz = Integer.signum(destPos.x - this.getPosition().x);
-        Point newPos = new Point(this.getPosition().x + horiz, this.getPosition().y);
-        if (horiz == 0 || world.isOccupied( newPos) && world.getOccupancyCell( newPos).getClass() != Stump.class) {
-            int vert = Integer.signum(destPos.y - this.getPosition().y);
-            newPos = new Point(this.getPosition().x, this.getPosition().y + vert);
+        PathingStrategy strat = new AStarPathingStrategy();
+//        PathingStrategy strat = new SingleStepPathingStrategy();
 
-            if (vert == 0 || world.isOccupied( newPos) && world.getOccupancyCell( newPos).getClass() != Stump.class) {
-                newPos = this.getPosition();
-            }
+        Predicate<Point> canPassThrough = p -> (world.withinBounds(p) && (!world.isOccupied(p) || world.getOccupancyCell(p).getClass() == Stump.class));
+        BiPredicate<Point, Point> withinReach = (p1, p2) -> (p1.adjacentTo(p2));
+        List<Point> path = strat.computePath( this.getPosition(), destPos,
+                canPassThrough,
+                withinReach,
+                PathingStrategy.CARDINAL_NEIGHBORS );
+        System.out.println("DudeNotFull Position: " + path);
+        if (path.size() != 0) {
+            return path.get(0);
         }
-
-        return newPos;
+        return this.getPosition();
+//        int horiz = Integer.signum(destPos.x - this.getPosition().x);
+//        Point newPos = new Point(this.getPosition().x + horiz, this.getPosition().y);
+//        if (horiz == 0 || world.isOccupied( newPos) && world.getOccupancyCell( newPos).getClass() != Stump.class) {
+//            int vert = Integer.signum(destPos.y - this.getPosition().y);
+//            newPos = new Point(this.getPosition().x, this.getPosition().y + vert);
+//
+//            if (vert == 0 || world.isOccupied( newPos) && world.getOccupancyCell( newPos).getClass() != Stump.class) {
+//                newPos = this.getPosition();
+//            }
+//        }
+//
+//        return newPos;
     }
 
     //help
